@@ -10,7 +10,7 @@ services:
     depends_on:
       - api
     volumes:
-      - ./php/:/var/www/html
+      - ./php-backend:/var/www/html
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/sites/:/etc/nginx/sites-available
       - ./nginx/conf.d/:/etc/nginx/conf.d
@@ -18,13 +18,13 @@ services:
   api:
     container_name: api
     restart: always
-    build: ./php
+    build: ./php-backend
     depends_on:
       - db
     links:
       - db
     volumes:
-      - ./php/:/var/www/html
+      - ./php-backend:/var/www/html
       - ./logs/php.log:/var/log/fpm-php.www.log
     environment:
       - DATABASE_USER=user
