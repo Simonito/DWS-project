@@ -1,5 +1,7 @@
 <?php
 
+require 'vendor/autoload.php';
+
 // echo 'Goodbye World!' . "\n";
 echo
 '<div>

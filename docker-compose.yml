@@ -3,14 +3,15 @@
 version: "3.8"
 services:
   nginx:
-    container_name: server
+    container_name: nginx
     build: ./nginx
     ports:
       - "8080:80"
     depends_on:
       - api
     volumes:
-      - ./php-backend:/var/www/html
+      - ./svelte-frontend/public:/var/www/html/svelte-frontend
+      - ./php-backend:/var/www/html/php-backend
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/sites/:/etc/nginx/sites-available
       - ./nginx/conf.d/:/etc/nginx/conf.d
@@ -24,7 +25,7 @@ services:
     links:
       - db
     volumes:
-      - ./php-backend:/var/www/html
+      - ./php-backend:/var/www/html/php-backend
       - ./logs/php.log:/var/log/fpm-php.www.log
     environment:
       - DATABASE_USER=user

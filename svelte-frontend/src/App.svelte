@@ -1,22 +1,44 @@
 <script>
   let currentForm = 'login-form';
+  let errorMessage = '';
 
   function showForm(formId) {
     currentForm = formId;
   }
 	showForm('login-form');
+
+  async function handleLogin(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('/login.php', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        // Handle a successful response (e.g., user logged in or registered)
+        // You can optionally update the UI here.
+        console.log('Request successful');
+        const jsonRes = await response.json();
+        console.log(jsonRes);
+      } else {
+        // Handle errors (e.g., invalid credentials)
+        const errorData = await response.json();
+        errorMessage = errorData.message;
+      }
+    } catch (error) {
+      // Handle network or other errors
+      errorMessage = 'An error occurred. Please try again.';
+      console.error(error);
+      console.error(errorMessage);
+    }
+  }
 </script>
 
 <style>
-  /* basic styling */
-  /* body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f2f2f2;
-  } */
-
-  /* form styling */
   .form-container {
     display: flex;
     flex-direction: column;
@@ -69,7 +91,6 @@
     margin-top: 20px;
   }
 
-  /* error message styling */
   .error {
     color: red;
     font-weight: bold;
@@ -78,7 +99,7 @@
 </style>
 
 <div class="form-container">
-  <form class="form" id="login-form" style={currentForm === 'login-form' ? 'display: flex' : 'display: none'}>
+  <form class="form" id="login-form" style={currentForm === 'login-form' ? 'display: flex' : 'display: none'} on:submit={handleLogin}>
     <h2>Login</h2>
     <div id="login-error" class="error"></div>
     <input type="text" placeholder="Username" name="username" required />

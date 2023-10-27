@@ -1,1 +1,10 @@
 .DS_Store
+
+logs/.DS_Store
+
+nginx/.DS_Store
+
+php-backend/.DS_Store
+php-backend/vendor
+
+svelte-frontend/.DS_Store
