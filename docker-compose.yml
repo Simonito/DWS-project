@@ -29,7 +29,7 @@ services:
       - ./logs/php.log:/var/log/fpm-php.www.log
     environment:
       - DATABASE_USER=user
-      - DATABASE_HOST=db
+      - DATABASE_HOST=database
       - DATABASE_PORT=5432
       - DATABASE_NAME=demo
       - DATABASE_PASSWORD=admin

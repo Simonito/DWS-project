@@ -15,7 +15,7 @@ echo
 </div>';
 
 $dbhost = 'database';
-$dbname='demo';
+$dbname = 'demo';
 $dbuser = 'user';
 $dbpass = 'admin';
 
@@ -23,11 +23,19 @@ $dbconn = pg_connect("host=$dbhost dbname=$dbname user=$dbuser password=$dbpass"
     or die('Could not connect: ' . pg_last_error());
 
 $query = 'SELECT VERSION();';
-$result = pg_query($query) or die('Error message: ' . pg_last_error());
+$result = pg_query($dbconn, $query) or die('Error message: ' . pg_last_error());
 
-while ($row = pg_fetch_row($result)) {
-    echo "$row[0]\n";
-}
+$res = pg_fetch_all($result);
+print_r($result);
+echo '<br>';
+
+echo "version: ";
+print_r($res[0]['version']);
+echo '<br>';
+
+echo "row count: ";
+print_r(pg_num_rows($result));
+echo '<br>';
 
 pg_free_result($result);
 pg_close($dbconn);

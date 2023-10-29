@@ -19,13 +19,28 @@
       });
 
       if (response.ok) {
-        // Handle a successful response (e.g., user logged in or registered)
-        // You can optionally update the UI here.
+        // Handle a successful response
         console.log('Request successful');
         const jsonRes = await response.json();
         console.log(jsonRes);
+        switch(jsonRes.code) {
+          case 200:
+            const authToken = jsonRes.authToken;
+            document.cookie = 'authToken=' + authToken;
+            // TODO: navigate to main page
+            break;
+          case 400:
+            // TODO: display invalid password
+            break;
+          case 404:
+            // TODO: display non existent user
+            break;
+          default:
+            // TODO: dont know
+            break;
+        }
       } else {
-        // Handle errors (e.g., invalid credentials)
+        // Handle errors
         const errorData = await response.json();
         errorMessage = errorData.message;
       }
