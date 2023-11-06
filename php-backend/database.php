@@ -19,12 +19,19 @@ function chech_unique_username($username) {
 }
 
 function create_user($username, $password) {
+    global $dbconn;
     $user_id = Uuid::uuid4();
-    $query = "INSERT INTO users (user_id, username, password) VALUES ($user_id, $username, $password);";
-    pg_query($dbconn, $query);
+    $query = "INSERT INTO users (user_id, username, password) VALUES ($1, $2, $3);";
+    $result = pg_query_params($dbconn, $query, [$user_id, $username, $password]);
+
+    if (!$result) {
+        // Handle the database error
+        die('Error creating user: ' . pg_last_error());
+    }
 }
 
 function get_user_by_name($username) {
-    $query = "SELECT * FROM users WHERE username = $username;";
-    return pg_query($dbconn, $query);
+    global $dbconn;
+    $query = "SELECT * FROM users WHERE username = $1;";
+    return pg_query_params($dbconn, $query, [$username]);
 }
