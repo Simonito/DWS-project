@@ -9,6 +9,10 @@ RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
     ln -s /usr/local/bin/composer /usr/bin/composer
 
+RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
+&& pecl install redis \
+&& docker-php-ext-enable redis.so
+
 COPY . /app
 WORKDIR /app
 

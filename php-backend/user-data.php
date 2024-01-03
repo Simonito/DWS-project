@@ -4,20 +4,20 @@ require 'vendor/autoload.php';
 
 require __DIR__ . '/dbactions/get-user.php';
 
-require __DIR__ . '/session.php';
+require __DIR__ . '/session/session.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     $sessid = $_REQUEST['pfa_cookie'];
-    var_dump($_REQUEST);
-    var_dump($sessid);
-    var_dump(get_session_cookies());
     $user_id = get_user_from_session($sessid);
-    var_dump($user_id);
     if (!$user_id) {
-        setcookie('pfa_cookie', $sessid, -3600);
         http_response_code(401);
-
+        setcookie('pfa_cookie', $sessid, -3600);
+        echo json_encode([
+            'status' => 'Unauthenticated',
+            'code' => 401,
+            'message' => 'Malformed cookie. log in again'
+        ]);
     } else {
         try {
             $res_user = get_user($user_id);

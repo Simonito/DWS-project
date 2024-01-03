@@ -5,7 +5,7 @@ require 'vendor/autoload.php';
 require __DIR__ . '/dbactions/get-user.php';
 require __DIR__ . '/dbactions/create-user.php';
 
-require __DIR__ . '/session.php';
+require __DIR__ . '/session/session.php';
 
 use Ramsey\Uuid\Uuid;
 
