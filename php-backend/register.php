@@ -2,29 +2,44 @@
 
 require 'vendor/autoload.php';
 
+require __DIR__ . '/dbactions/get-user.php';
+require __DIR__ . '/dbactions/create-user.php';
+
 use Ramsey\Uuid\Uuid;
 
+// REGISTRATION
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['username'];
     $passwd = $_POST['password'];
 
-    $uuid = Uuid::uuid4();
+    header('Content-Type: application/json');
 
-    header('Content-Type: application/json');
-    $response = [
-        'status' => 'Ok',
-        'code' => 200,
-        'message' => 'Successfully logged in',
-        'name' => $name,
-        'passwd' => $passwd,
-        'uuid' => $uuid
-    ];
-    echo json_encode($response);
-} else {
-    header('Content-Type: application/json');
-    echo json_encode([
-        'status' => 'Not Found',
-        'code' => 404,
-        'message' => 'Failed to log in'
-    ]);
+    // var_dump($_REQUEST);
+    // $sessid = $_REQUEST['session_id'];
+
+    // verify that username is available
+    $res_user = get_user_by_name($name);
+    if (pg_num_rows($res_user) != 0) {
+        // username is taken
+        http_response_code(409);
+        echo json_encode([
+            'status' => 'Conflict',
+            'code' => 409,
+            'message' => 'User already exists'
+        ]);
+    } else {
+        // username is available
+        $hashed_pass = password_hash($passwd, PASSWORD_BCRYPT);
+        create_user($name, $hashed_pass);
+
+        $session_cookie = Uuid::Uuid4();
+        setcookie('pfa_cookie', $session_cookie, time() + 3600);
+        http_response_code(201);
+        $response = [
+            'status' => 'Created',
+            'code' => 201,
+            'pfa_cookie' => $session_cookie,
+        ];
+        echo json_encode($response);
+    }
 }
