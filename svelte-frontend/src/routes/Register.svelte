@@ -1,6 +1,5 @@
 <script>
     import { push } from 'svelte-spa-router';
-    import axios from 'axios';
 
     let errorMessage = '';
 
@@ -28,22 +27,6 @@
         } catch(err) {
 
         }
-    }
-
-    $: handle = async () => {
-    // $: handleRegister = async () => {
-        const response = await fetch('/register.php', {
-            method: 'POST',
-            headers: {
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                'username': username,
-                'password': password
-            }),
-        });
-
-        await push('/homepage');
     }
 
     $: pushLogin = () => {
