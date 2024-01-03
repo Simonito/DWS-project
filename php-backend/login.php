@@ -2,7 +2,7 @@
 
 require __DIR__ . '/dbactions/get-user.php';
 
-require __DIR__ . '/session.php';
+require __DIR__ . '/session/session.php';
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
