@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public --no-clear"
+    "start": "sirv public --no-clear",
+    "init-db": "node db-scripts/init-db.js"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.0",
@@ -19,6 +20,7 @@
     "svelte": "^3.55.0"
   },
   "dependencies": {
+    "pg": "^8.11.3",
     "sirv-cli": "^2.0.0"
   }
 }

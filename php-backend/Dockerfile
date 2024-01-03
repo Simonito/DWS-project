@@ -1,4 +1,4 @@
-FROM arm64v8/php:8.3-rc-fpm-alpine
+FROM php:8.3-rc-fpm-alpine
 
 RUN apk update && apk add --no-cache postgresql postgresql-dev libzip-dev git zip
 
@@ -11,5 +11,7 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 
 COPY . /app
 WORKDIR /app
+
+RUN composer install
 
 EXPOSE 9000

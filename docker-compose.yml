@@ -9,6 +9,7 @@ services:
       - "8080:80"
     depends_on:
       - api
+      - svelte-builder
     volumes:
       - ./svelte-frontend/public:/var/www/html/svelte-frontend
       - ./php-backend:/var/www/html/php-backend
@@ -16,12 +17,21 @@ services:
       - ./nginx/sites/:/etc/nginx/sites-available
       - ./nginx/conf.d/:/etc/nginx/conf.d
       - ./logs/nginx:/var/log/nginx/
+  svelte-builder:
+    container_name: svelte-builder
+    build:
+      context: ./svelte-frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./svelte-frontend:/app
+    command: npm run build
   api:
     container_name: api
     restart: always
     build: ./php-backend
     depends_on:
       - db
+      - svelte-builder
     links:
       - db
     volumes:
@@ -43,8 +53,10 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: admin
+      POSTGRES_DB: demo
     volumes:
       - local_pgdata:/var/lib/postgresql/data
+      - ./db-init-scripts:/docker-entrypoint-initdb.d
 
   pgadmin:
     image: dpage/pgadmin4
