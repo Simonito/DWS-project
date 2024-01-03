@@ -5,6 +5,8 @@ require 'vendor/autoload.php';
 require __DIR__ . '/dbactions/get-user.php';
 require __DIR__ . '/dbactions/create-user.php';
 
+require __DIR__ . '/session.php';
+
 use Ramsey\Uuid\Uuid;
 
 // REGISTRATION
@@ -30,9 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // username is available
         $hashed_pass = password_hash($passwd, PASSWORD_BCRYPT);
-        create_user($name, $hashed_pass);
+        $user_id = Uuid::uuid4();
+        create_user($user_id, $name, $hashed_pass);
 
-        $session_cookie = Uuid::Uuid4();
+        $session_cookie = new_session($user_id);
+        
         setcookie('pfa_cookie', $session_cookie, time() + 3600);
         http_response_code(201);
         $response = [

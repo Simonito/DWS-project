@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/dbactions/get-user.php';
+
 require __DIR__ . '/session.php';
 
 error_reporting(E_ALL);
@@ -36,8 +37,9 @@ function process_login_request($name, $passwd) {
                 'message' => 'User does not exist'
             ]);
         } else {
-            $hashed_passwd = pg_fetch_all($res_user)[0]['password'];
-            if (password_verify($passwd, $hashed_passwd) == false) {
+            $user = pg_fetch_all($res_user)[0];
+            $hashed_password = $user['password'];
+            if (password_verify($passwd, $hashed_password) == false) {
                 header('Content-Type: application/json');
                 http_response_code(404);
                 echo json_encode([
@@ -46,7 +48,8 @@ function process_login_request($name, $passwd) {
                     'message' => 'Invalid password'
                 ]);
             } else {
-                $token = new_session($name);
+                $token = new_session($user['user_id']);
+                setcookie('pfa_cookie', $token, time() + 3600);
                 http_response_code(200);
                 $response = [
                     'status' => 'Ok',
