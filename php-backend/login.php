@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/database.php';
+require __DIR__ . '/dbactions/get-user.php';
 require __DIR__ . '/session.php';
 
 error_reporting(E_ALL);
@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 } else {
     header('Content-Type: application/json');
+    http_response_code(404);
     echo json_encode([
         'status' => 'Not Found',
         'code' => 404,
@@ -28,6 +29,7 @@ function process_login_request($name, $passwd) {
 
         if (pg_num_rows($res_user) == 0) {
             header('Content-Type: application/json');
+            http_response_code(404);
             echo json_encode([
                 'status' => 'Not Found',
                 'code' => 404,
@@ -37,13 +39,15 @@ function process_login_request($name, $passwd) {
             $hashed_passwd = pg_fetch_all($res_user)[0]['password'];
             if (password_verify($passwd, $hashed_passwd) == false) {
                 header('Content-Type: application/json');
+                http_response_code(404);
                 echo json_encode([
                     'status' => 'Bad Request',
-                    'code' => 400,
+                    'code' => 404,
                     'message' => 'Invalid password'
                 ]);
             } else {
                 $token = new_session($name);
+                http_response_code(200);
                 $response = [
                     'status' => 'Ok',
                     'code' => 200,
@@ -56,6 +60,7 @@ function process_login_request($name, $passwd) {
     } catch (Exception $e) {
         // Handle unexpected exceptions here
         header('Content-Type: application/json');
+        http_response_code(500);
         echo json_encode([
             'status' => 'Internal Server Error',
             'code' => 500,
