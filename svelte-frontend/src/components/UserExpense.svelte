@@ -17,7 +17,7 @@
                 body: formData
             });
 
-            if (response.status === 204) {
+            if (response.status === 200) {
                 onExpenseDeleted();
             }
         } catch (err) {
@@ -26,9 +26,8 @@
     }
 
     function onExpenseDeleted() {
-        console.log({deleting: expense});
         dispatch('expenseDeleted', {
-            expense: expense
+            expense_id: expense.expense_id
         });
     }
 

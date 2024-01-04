@@ -2,8 +2,8 @@ import moment from 'moment';
 
 
 export const ascendingAmounts = (x, y) => {
-    const a = x.amount;
-    const b = y.amount;
+    const a = parseFloat(x.amount);
+    const b = parseFloat(y.amount);
 
     if (a < b) {
         return -1;
@@ -14,8 +14,8 @@ export const ascendingAmounts = (x, y) => {
 }
 
 export const descendingAmounts = (x, y) => {
-    const a = x.amount;
-    const b = y.amount;
+    const a = parseFloat(x.amount);
+    const b = parseFloat(y.amount);
 
     if (a > b) {
         return -1;
@@ -25,7 +25,7 @@ export const descendingAmounts = (x, y) => {
     return 0;
 }
 
-export const ascendingCategories = (x, y) => {
+export const descendingCategories = (x, y) => {
     const a = x.category_name;
     const b = y.category_name;
 
@@ -37,7 +37,7 @@ export const ascendingCategories = (x, y) => {
     return 0;
 }
 
-export const descendingCategories = (x, y) => {
+export const ascendingCategories = (x, y) => {
     const a = x.category_name;
     const b = y.category_name;
 

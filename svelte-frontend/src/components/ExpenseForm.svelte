@@ -29,9 +29,6 @@
                 acc[cat.name] = cat.category_id;
                 return acc;
             }, {});
-            
-            console.log({categories});
-            console.log({cat_to_id});
         }
     }
 
