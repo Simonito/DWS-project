@@ -26,26 +26,9 @@
                 await push('/login');
             }
         } catch(err) {
-
+            // errors are for nubbies
+            // (justkidding, I just dont have the motivation to handle this)
         }
-    }
-
-    $: handle = async () => {
-        console.log({username, password});
-        const response = await fetch('/login.php', {
-            method: 'POST',
-            headers: {
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                'username': username,
-                'password': password
-            }),
-        });
-
-        if (response.status === 200) {
-            await push('/');
-        }         
     }
 
     $: pushRegister = () => {
