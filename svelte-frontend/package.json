@@ -25,6 +25,7 @@
     "moment": "^2.30.1",
     "pg": "^8.11.3",
     "sirv-cli": "^2.0.0",
+    "svelte-confirm": "^0.0.0",
     "svelte-spa-router": "^4.0.0"
   }
 }
