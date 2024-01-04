@@ -18,14 +18,16 @@
     $: ordering && reoderExpenses();
 
     export let expenses;
+    $: expenses && updateDisplayedExpenses();
+
     let displayedExpenses = [];
 
     function removeExpense(event) {
-        expenses = expenses.filter(exp => exp != event.detail.expense);
+        expenses = expenses.filter(exp => exp.expense_id != event.detail.expense_id);
         updateDisplayedExpenses();
     }
 
-    function updateDisplayedExpenses() {
+    async function updateDisplayedExpenses() {
         displayedExpenses = structuredClone(expenses);
         reoderExpenses();
     }

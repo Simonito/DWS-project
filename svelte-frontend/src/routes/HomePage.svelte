@@ -38,7 +38,6 @@
             } else {
                 // AUTHORIZED
                 const res = await response.json();
-                console.log({res});
             }
         } catch(err) {
             await replace('/login');
