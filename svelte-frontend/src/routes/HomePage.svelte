@@ -57,9 +57,9 @@
         }
     }
 
-    // onMount(() => {
-    //     authenticate().then(() => updateUserData());
-    // });
+    onMount(() => {
+        authenticate().then(() => updateUserData());
+    });
 
 
 </script>
