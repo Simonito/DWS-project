@@ -1,27 +1,35 @@
 <script>
     import { onMount } from 'svelte';
-  
+
     let category = '';
     let amount = 0;
     let paidAt = '';
-  
-    let categories = ["Entertainment", "Food and Drinks", "Home", "Life", "Transportation", "Utilities", "Other"];
 
-    // onMount(() => {
-    //     updateUserData();
-    //   // Set default paidAt value or initialize any other logic on component mount
-    //   // paidAt = ...
-    // });
-  
-    function handleSubmit() {
-      // Implement your form submission logic here
-      // You can access category, amount, and paidAt variables
+    let categories = ["Life", "Housing", "Other"];
+
+    async function refreshCategories() {
+        const response = await fetch('/data-category.php', {
+            method: 'GET',
+        });
+
+        if (response.status === 200) {
+            const cats_res = await response.json();
+            categories = cats_res.categories.map((cat) => cat.name);
+        }
     }
+
+    function handleSubmit() {
+
+    }
+
+    onMount(() => {
+        refreshCategories();
+    })
 </script>
   
 <section class="form-container">
     <form class="form" on:submit|preventDefault={handleSubmit}>
-        <h2>Expense Form</h2>
+        <h2>Add Expense</h2>
 
         <label>
             Category:
@@ -52,13 +60,12 @@
 </section>
   
 <style>
-    .form-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-    }
+  .form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+  }
 
   .form {
     display: flex;

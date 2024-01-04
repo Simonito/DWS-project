@@ -8,8 +8,8 @@
 
 <Router routes={
     {
-        '/': LogIn,
+        '/': HomePage,
+        '/login': LogIn,
         '/register': Register,
-        '/homepage': HomePage
     }
 }/>

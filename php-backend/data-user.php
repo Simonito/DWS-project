@@ -3,6 +3,7 @@
 require 'vendor/autoload.php';
 
 require __DIR__ . '/dbactions/get-user.php';
+require __DIR__ . '/dbactions/get-user-expenses.php';
 
 require __DIR__ . '/session/session.php';
 
@@ -21,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     } else {
         try {
             $res_user = get_user($user_id);
+            $res_user_expenses = get_expenses_by_user_id($user_id);
     
             if (pg_num_rows($res_user) == 0) {
                 header('Content-Type: application/json');
@@ -32,12 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 ]);
             } else {
                 $username = pg_fetch_all($res_user)[0]['username'];
+                $user_expenses = pg_fetch_all($res_user_expenses);
                 
                 http_response_code(200);
                 $response = [
                     'status' => 'Ok',
                     'code' => 200,
                     'username' => $username,
+                    'user_expenses' => $user_expenses,
                 ];
                 header('Content-Type: application/json');
                 echo json_encode($response);
