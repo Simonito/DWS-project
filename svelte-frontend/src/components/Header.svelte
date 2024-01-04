@@ -32,7 +32,7 @@
     #header {
         background-color: #4caf50;
         padding: 10px;
-        padding-top: 50px;
+        /* padding-top: 50px; */
         text-align: center;
         color: white;
         border-radius: 4px;

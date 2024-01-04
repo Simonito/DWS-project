@@ -8,6 +8,19 @@
     let username = "ahoj";
     let expenses = [
         {
+            expense_id: 0,
+            amount: 0,
+            paid_at: "0",
+            category_name: "None",
+        },
+        {
+            expense_id: 1,
+            amount: 50.5,
+            paid_at: "2024-01-04 11:43:00",
+            category_name: "Entertainment",
+        },
+        {
+            expense_id: 2,
             amount: 0,
             paid_at: "0",
             category_name: "None",
@@ -40,35 +53,34 @@
         if (user_data_response.status === 200) {
             const user_data_json = await user_data_response.json();
             username = user_data_json.username;
-            console.log({user_data_json});
             expenses = user_data_json.user_expenses;
         }
     }
 
-    onMount(() => {
-        authenticate().then(() => updateUserData());
-    });
+    // onMount(() => {
+    //     authenticate().then(() => updateUserData());
+    // });
 
 
 </script>
   
-<main>
+<div class="main">
     <Header {username} />
     <div class="form-container">
-        <ExpenseForm />
+        <ExpenseForm on:expenseCreated={updateUserData} />
     </div>
     <div>
         <UserExpenses {expenses}/>
     </div>
-</main>
+</div>
 
 <style>
-    main {
-        margin-top: 15px;
+    .main {
+        /* margin-top: 15px; */
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        /* height: 100vh; */
     }
 </style>
