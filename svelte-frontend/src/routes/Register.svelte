@@ -18,7 +18,7 @@
             });
 
             if (response.status === 201) {
-                await push('/homepage');
+                await push('/');
             } else {
                 const json = await response.json();
                 errorMessage = json.message;
@@ -30,7 +30,7 @@
     }
 
     $: pushLogin = () => {
-        push('/');
+        push('/login');
     }
 </script>
 <style>

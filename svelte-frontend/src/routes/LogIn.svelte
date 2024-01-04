@@ -19,11 +19,11 @@
             });
 
             if (response.status === 200) {
-                await push('/homepage');
+                await push('/');
             } else {
                 const json = await response.json(); 
                 errorMessage = json.message;
-                await push('/');
+                await push('/login');
             }
         } catch(err) {
 
@@ -44,10 +44,8 @@
         });
 
         if (response.status === 200) {
-            await push('/homepage');
-        }
-
-         
+            await push('/');
+        }         
     }
 
     $: pushRegister = () => {
