@@ -1,37 +1,37 @@
 <script>
-	import DeleteDialog from './dialog/DeleteDialog.svelte';
-    import { Trash2Icon } from 'svelte-feather-icons';
+	import DeleteDialog from './DeleteDialog.svelte';
+    import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
 
     export let expense;
 
 
+    async function deleteExpense() {
+        const formData = new FormData();
+        formData.append('expense_id', expense.expense_id);
 
-    let status = 0;
+        try {
+            const response = await fetch('/remove-expense.php', {
+                method: 'POST',
+                body: formData
+            });
 
-	const onCancel = () => {
-		status = -1;
-	};
+            if (response.status === 204) {
+                onExpenseDeleted();
+            }
+        } catch (err) {
+            // i cannot bother catching errors, so if something goes wrong ... blame me
+        }
+    }
 
-	const onOkay = () => {
-		status = 1;
-	};
+    function onExpenseDeleted() {
+        console.log({deleting: expense});
+        dispatch('expenseDeleted', {
+            expense: expense
+        });
+    }
 
-    const deleteDialog = () => {
-		open(
-			DeleteDialog,
-			{
-				message: "What is your name?",
-				hasForm: false,
-				onCancel,
-				onOkay
-			},
-			{
-				closeButton: false,
-                closeOnEsc: false,
-                closeOnOuterClick: true,
-			}
-	  );
-	};
 
 </script>
 
@@ -46,9 +46,7 @@
             </div>
         </div>
         <div id="del-but-div">
-            <button on:click={deleteDialog}>
-                <Trash2Icon/>
-            </button>
+            <DeleteDialog on:deleteExpense={deleteExpense}/>
         </div>
     </div>
 
@@ -68,9 +66,7 @@
 </div>  
 
 <style>
-    /* Add styles for the user-expense component */
     .user-expense {
-        /* Your styles for a single expense */
         margin-bottom: 10px;
         border: 1px solid #ddd;
         padding: 10px;
@@ -101,17 +97,5 @@
     #del-but-div {
         overflow: hidden;
         margin: 5px;
-    }
-
-    button {
-        background-color: #a06645;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #843c38;
     }
 </style>
