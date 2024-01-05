@@ -1,6 +1,7 @@
 <script>
 	import DeleteDialog from './DeleteDialog.svelte';
     import { createEventDispatcher } from 'svelte';
+    import { push } from 'svelte-spa-router';
 
     const dispatch = createEventDispatcher();
 
@@ -19,6 +20,9 @@
 
             if (response.status === 200) {
                 onExpenseDeleted();
+            } else if (response.status === 401) {
+                // unauthorized - return to login page
+                push('/login');
             }
         } catch (err) {
             // i cannot bother catching errors, so if something goes wrong ... blame me

@@ -1,4 +1,4 @@
-FROM php:8.3-rc-fpm-alpine
+FROM arm64v8/php:8.3-rc-fpm-alpine
 
 RUN apk update && apk add --no-cache postgresql postgresql-dev libzip-dev git zip
 
