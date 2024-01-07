@@ -27,32 +27,32 @@ After that right-click on the created `demo` database and select `Query Tool`. N
 
 ### For baseline grade 6 (50.00–59.99%)
 (3)
-- [ > ] Reading data from the database and displaying it on the web app (also filtering, sorting...)
-- [ >< ] Saving data from web forms to a database
+- [x] Reading data from the database and displaying it on the web app (also filtering, sorting...)
+- [x] Saving data from web forms to a database
 - [ ] Updating data in the database via your web app
-- [ >< ] Data deletion via your web app
+- [x] Data deletion via your web app
 
 ### For baseline grade 7 (60.00–69.99%)
 (2)
 - [ ] Using PDO to connect to the database (in the case of using a relational database)
-- [ >< ] User authentication (login/logout)
-- [ >< ] User registration
-- [ >< ] Use of LocalStorage or cookies
+- [x] User authentication (login/logout)
+- [x] User registration
+- [x] Use of LocalStorage or cookies
 
 ### For baseline grade 8 (70.00–79.99%)
 (2)
 - [ ] File storage and management (in the file system, not in the database)
 - [ ] Using AJAX technology
-- [ >< ] Secure storage of passwords (at least hash function)
+- [x] Secure storage of passwords (at least hash function)
 - [ ] Automatic generation of barcodes or QR codes
 - [ ] Use of user location data
-- [ >< ] Using a source code management system (e.g., Git)
+- [x] Using a source code management system (e.g., Git)
 
 ### For baseline grade 9 (80.00–89.99%)
 (2)
-- [ >< ] Using the jQuery library or any JavaScript framework of your choice
+- [x] Using the jQuery library or any JavaScript framework of your choice
 - [ ] Using regular expressions
-- [ >< ] Access to the database exclusively via REST calls
+- [x] Access to the database exclusively via REST calls
 - [ ] Using the cURL library
 - [ ] Automatic creation of PDF documents
 
@@ -60,7 +60,7 @@ After that right-click on the created `demo` database and select `Query Tool`. N
 (2)
 - [ ] Integration of data from unstructured external web sources (parsing, web scraping)
 - [ ] Automated sending of notifications via e-mail (e.g., registration notification)
-- [ >< ] Separation of logical sections of the program code (separate frontend and backend components, so that the backend component can also be used for, for example, a mobile application (which, of course, does not need to be prepared))
+- [x] Separation of logical sections of the program code (separate frontend and backend components, so that the backend component can also be used for, for example, a mobile application (which, of course, does not need to be prepared))
 - [ ] Placing a website on a server accessible online
-- [ >< ] Project containerization using Docker
+- [x] Project containerization using Docker
 
