@@ -1,3 +1,7 @@
+## CPU arch
+The project was developed on an arm64 processor and for that the php service uses amr64 php docker image.
+Change first line in `php/Dockerfile` from `FROM arm64v8/php:8.3-rc-fpm-alpine` to just `FROM php:8.3-rc-fpm-alpine` if running on x86.
+
 ## How to run
 
 run
