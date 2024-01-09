@@ -14,7 +14,7 @@
 
         try {
             const response = await fetch('/remove-expense.php', {
-                method: 'POST',
+                method: 'DELETE',
                 body: formData
             });
 

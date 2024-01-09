@@ -9,7 +9,7 @@ require __DIR__ . '/session/session.php';
 use Ramsey\Uuid\Uuid;
 
 // SUBMIT EXPENSE
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     $expense_id = $_POST['expense_id'];
 
     header('Content-Type: application/json');
